@@ -15,7 +15,7 @@ task :build => :env do
 end
 
 task :copy do
-  to = File.expand_path("~/dev/blake/caper/vendor/assets/javascripts/flashcanvas")
+  to = File.expand_path(ENV['SWF_DEST'] || "~/dev/blake/caper/vendor/assets/javascripts/flashcanvas")
   sh "cp bin/flashcanvas.swf #{to}"
 end
 
