@@ -45,7 +45,7 @@ package
   import flash.ui.ContextMenuItem;
   import flash.utils.Timer;
 
-  import com.demonsters.debugger.MonsterDebugger;
+  //import com.demonsters.debugger.MonsterDebugger;
 
   import com.adobe.images.PNGEncoder;
   import com.googlecode.flashcanvas.Canvas;
@@ -62,13 +62,13 @@ package
 
     public function FlashCanvas()
     {
-      MonsterDebugger.initialize(this);
-      MonsterDebugger.trace(this, "Hello World!");
+      //MonsterDebugger.initialize(this);
+      //MonsterDebugger.trace(this, "Hello World!");
 
       // stage settings
       stage.scaleMode = StageScaleMode.NO_SCALE;
       stage.align     = StageAlign.TOP_LEFT;
-      stage.frameRate = 60;
+      stage.frameRate = 25;
 
       Security.allowDomain("*");
 
@@ -128,34 +128,40 @@ package
 
         this.contextMenu = contextMenu;
       } catch (e:*) {
-        MonsterDebugger.trace(this, "error making menus");
-        MonsterDebugger.trace(this, e);
+		trace('error making menus');
+        //MonsterDebugger.trace(this, "error making menus");
+        //MonsterDebugger.trace(this, e);
       }
 
       try
       {
+		trace("unlock 1");
         ExternalInterface.call("FlashCanvas.unlock", flashCanvasId);
       }
       catch (error:Error)
       {
-        MonsterDebugger.trace(this, "unlocking error");
-        MonsterDebugger.trace(this, error);
+		trace("unlocking error");
+        //MonsterDebugger.trace(this, "unlocking error");
+        //MonsterDebugger.trace(this, error);
         timer = new Timer(0, 1);
         timer.addEventListener(TimerEvent.TIMER, timerHandler);
         timer.start();
       }
-      MonsterDebugger.trace(this, "yay2");
+	  trace("yay2");
+      //MonsterDebugger.trace(this, "yay2");
     }
 
 
     private function timerHandler(event:TimerEvent):void
     {
-      MonsterDebugger.trace(this, "timer");
-      MonsterDebugger.trace(this, event);
+	  trace("timer");
+      //MonsterDebugger.trace(this, "timer");
+      //MonsterDebugger.trace(this, event);
 
       timer.removeEventListener(TimerEvent.TIMER, timerHandler);
 
       // Send JavaScript a message that the swf is ready
+      trace("unlock 2");
       ExternalInterface.call("FlashCanvas.unlock", flashCanvasId);
     }
 
@@ -169,14 +175,15 @@ package
       var internalCanvasId:uint = canvases.length;
       var canvas:Canvas = new Canvas(this, internalCanvasId);
       canvases.push(canvas);
-
-      MonsterDebugger.trace(this, "creating newAuxiliaryCanvas "+internalCanvasId);
+	  trace(this, "creating newAuxiliaryCanvas "+internalCanvasId);
+      //MonsterDebugger.trace(this, "creating newAuxiliaryCanvas "+internalCanvasId);
       return internalCanvasId;
     }
 
 
     public function executeCommand(internalCanvasId:Number, data:String):*
     {
+	  //trace("execute command from flash");
       if(!internalCanvasId) {internalCanvasId = 0}
       var canvas:Canvas = canvases[internalCanvasId];
 
@@ -199,9 +206,10 @@ package
         return null;
 
       } catch(e:*) {
-        MonsterDebugger.trace(this, "error executing command "+command.getCurrentCommand());
-        MonsterDebugger.trace(this, data);
-        MonsterDebugger.trace(this, e);
+		trace("error executing command "+command.getCurrentCommand());
+        //MonsterDebugger.trace(this, "error executing command "+command.getCurrentCommand());
+        //MonsterDebugger.trace(this, data);
+        //MonsterDebugger.trace(this, e);
         throw(e);
         return null;
       }
@@ -210,9 +218,10 @@ package
 
     public function resize(width:int, height:int):void
     {
-      MonsterDebugger.trace(this, "resizing main canvas")
-        MonsterDebugger.trace(this, width)
-        MonsterDebugger.trace(this, height)
+		trace("resizing main canvas", width, height);
+        //MonsterDebugger.trace(this, "resizing main canvas")
+        //MonsterDebugger.trace(this, width)
+        //MonsterDebugger.trace(this, height)
         canvases[0].resize(width, height);
     }
 

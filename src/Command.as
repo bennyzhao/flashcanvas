@@ -39,7 +39,7 @@ package
   import com.googlecode.flashcanvas.ImageData;
   import com.googlecode.flashcanvas.Image;
 
-  import com.demonsters.debugger.MonsterDebugger;
+  //import com.demonsters.debugger.MonsterDebugger;
 
   public class Command
   {
@@ -389,6 +389,9 @@ package
       var y:Number = input.readFloat();
       var w:Number = input.readFloat();
       var h:Number = input.readFloat();
+	  // if we don't clear rect then it works
+	  // TO DO - find out why this is called twice on first load!!
+	  //return;
       ctx.clearRect(x, y, w, h);
     }
 
@@ -713,6 +716,7 @@ package
 
     private function errorHandler(event:ErrorEvent):void
     {
+	  trace("error on image load");
       // Remove the image object from the cache.
       var image:Image = event.target as Image;
       images[image.src] = null;
@@ -731,14 +735,19 @@ package
       var url:String = image.src;
       var error:int  = event is ErrorEvent ? 1 : 0;
 
+	  trace("IMAGE HAS LOADED!!");
+
       // Send JavaScript a message that the image has been loaded.
-      ExternalInterface.call("FlashCanvas.unlockImage", canvasId, url, error);
+	  //ExternalInterface.call("FlashCanvas.unlockImage", canvasId, url, error);
+	  trace("unlock from command as", ctx);
+      ExternalInterface.call("FlashCanvas.unlock", canvasId, url, error);
     }
 
     private function mlog(...args:Array):void
     {
       for(var i:uint=0, l:uint=args.length; i<l; i++) {
-        MonsterDebugger.trace(this, args[i]);
+		trace('mlog', this, args[i]);
+        //MonsterDebugger.trace(this, args[i]);
       }
     }
   }

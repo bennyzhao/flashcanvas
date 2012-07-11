@@ -39,7 +39,7 @@ package com.googlecode.flashcanvas
   import com.adobe.images.PNGEncoder;
 
   import com.googlecode.flashcanvas.CanvasRenderingContext2D;
-  import com.demonsters.debugger.MonsterDebugger;
+  //import com.demonsters.debugger.MonsterDebugger;
 
 
   public class Canvas extends Bitmap

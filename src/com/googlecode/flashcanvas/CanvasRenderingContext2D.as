@@ -55,7 +55,7 @@ package com.googlecode.flashcanvas
   import flash.utils.ByteArray;
   import flash.utils.Timer;
 
-  import com.demonsters.debugger.MonsterDebugger;
+  //import com.demonsters.debugger.MonsterDebugger;
 
 
   public class CanvasRenderingContext2D
@@ -252,6 +252,7 @@ package com.googlecode.flashcanvas
 
     public function set globalAlpha(value:Number):void
     {
+	  trace("set the global alpha to ", value);
       if (isFinite(value) && 0.0 <= value && value <= 1.0)
         state.globalAlpha = value;
     }
@@ -462,6 +463,7 @@ package com.googlecode.flashcanvas
 
     public function clearRect(x:Number, y:Number, w:Number, h:Number):void
     {
+	  //trace("clear rect called");
       if (!isFinite(x) || !isFinite(y) || !isFinite(w) || !isFinite(h))
         return;
 
@@ -1043,7 +1045,8 @@ package com.googlecode.flashcanvas
     private function mlog(...args:Array):void
     {
       for(var i:uint=0, l:uint=args.length; i<l; i++) {
-        MonsterDebugger.trace(this, args[i]);
+		trace(this, args[i]);
+        //MonsterDebugger.trace(this, args[i]);
       }
     }
 
@@ -1309,6 +1312,7 @@ package com.googlecode.flashcanvas
     {
       // Get the drawing state at the time drawImage() was called
       state = state || this.state;
+	  //trace('state is', state);
 
       var sx:Number;
       var sy:Number;
@@ -1394,7 +1398,7 @@ package com.googlecode.flashcanvas
 
       // Render the image to the Canvas
       _canvas.bitmapData.draw(source, matrix, colorTransform, null, null, true);
-
+	  //trace(state.globalAlpha);
       // Release the memory
       source.dispose();
     }
