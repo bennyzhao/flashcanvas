@@ -51,6 +51,7 @@ package com.googlecode.flashcanvas
   import flash.geom.Rectangle;
   import flash.text.TextField;
   import flash.text.TextFieldAutoSize;
+  import flash.text.TextFormatAlign;
   import flash.text.TextFormat;
   import flash.utils.ByteArray;
   import flash.utils.Timer;
@@ -252,7 +253,6 @@ package com.googlecode.flashcanvas
 
     public function set globalAlpha(value:Number):void
     {
-	  trace("set the global alpha to ", value);
       if (isFinite(value) && 0.0 <= value && value <= 1.0)
         state.globalAlpha = value;
     }
@@ -337,6 +337,7 @@ package com.googlecode.flashcanvas
 
     public function createPattern(image:*, repetition:String):CanvasPattern
     {
+	  trace("c pattern 1");
       return new CanvasPattern(image, repetition);
     }
 
@@ -1231,11 +1232,19 @@ package com.googlecode.flashcanvas
       // Create TextField object
       var textField:TextField     = new TextField();
       textField.autoSize          = TextFieldAutoSize.LEFT;
+	  if (state.textAlign == 'center') {
+		textField.autoSize = TextFieldAutoSize.CENTER;
+		textFormat.align = TextFormatAlign.CENTER;
+	  }
       textField.defaultTextFormat = textFormat;
-      textField.text              = text.replace(/[\t\n\f\r]/g, " ");
+	  textField.multiline = true;
+	  textField.wordWrap = true;
+	  textField.width = maxWidth;
+      //textField.text              = text.replace(/[\t\n\f\r]/g, " ");
+	  textField.text              = text;
 
       // Get the size of the text
-      var width:int  = textField.textWidth;
+      var width:int  = maxWidth;
       var height:int = textField.textHeight;
       var ascent:int = textField.getLineMetrics(0).ascent;
 

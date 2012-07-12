@@ -45,6 +45,8 @@ package com.googlecode.flashcanvas
             _image      = image;
             _repetition = repetition;
 
+			trace("new pattern", image);
+
             // If the image is ready for use
             if (image.complete)
             {
