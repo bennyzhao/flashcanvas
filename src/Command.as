@@ -694,6 +694,7 @@ package
       }
       else
       {
+		trace("image has not been cached, LOAD NOW!!");
         // Load the image asynchronously
         image = new Image();
         image.addEventListener(ErrorEvent.ERROR, errorHandler);
@@ -738,9 +739,10 @@ package
 	  trace("IMAGE HAS LOADED!!");
 
       // Send JavaScript a message that the image has been loaded.
-	  //ExternalInterface.call("FlashCanvas.unlockImage", canvasId, url, error);
 	  trace("unlock from command as", ctx);
       ExternalInterface.call("FlashCanvas.unlock", canvasId, url, error);
+	  // This calls the callback from canvas_rendering.imageLoader()
+	  ExternalInterface.call("FlashCanvas.unlockImage", canvasId, url, error);
     }
 
     private function mlog(...args:Array):void
