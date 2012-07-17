@@ -45,7 +45,6 @@ package
   import flash.ui.ContextMenuItem;
   import flash.utils.Timer;
 
-  //import com.demonsters.debugger.MonsterDebugger;
 
   import com.adobe.images.PNGEncoder;
   import com.googlecode.flashcanvas.Canvas;
@@ -62,8 +61,6 @@ package
 
     public function FlashCanvas()
     {
-      //MonsterDebugger.initialize(this);
-      //MonsterDebugger.trace(this, "Hello World!");
 
       // stage settings
       stage.scaleMode = StageScaleMode.NO_SCALE;
@@ -128,35 +125,28 @@ package
 
         this.contextMenu = contextMenu;
       } catch (e:*) {
-		trace('error making menus');
-        //MonsterDebugger.trace(this, "error making menus");
-        //MonsterDebugger.trace(this, e);
+        trace('error making menus');
       }
 
       try
       {
-		trace("unlock 1");
+        trace("unlock 1");
         ExternalInterface.call("FlashCanvas.unlock", flashCanvasId);
       }
       catch (error:Error)
       {
-		trace("unlocking error");
-        //MonsterDebugger.trace(this, "unlocking error");
-        //MonsterDebugger.trace(this, error);
+        trace("unlocking error");
         timer = new Timer(0, 1);
         timer.addEventListener(TimerEvent.TIMER, timerHandler);
         timer.start();
       }
-	  trace("yay2");
-      //MonsterDebugger.trace(this, "yay2");
+      trace("yay2");
     }
 
 
     private function timerHandler(event:TimerEvent):void
     {
-	  trace("timer");
-      //MonsterDebugger.trace(this, "timer");
-      //MonsterDebugger.trace(this, event);
+      trace("timer");
 
       timer.removeEventListener(TimerEvent.TIMER, timerHandler);
 
@@ -175,24 +165,20 @@ package
       var internalCanvasId:uint = canvases.length;
       var canvas:Canvas = new Canvas(this, internalCanvasId);
       canvases.push(canvas);
-	  trace(this, "creating newAuxiliaryCanvas "+internalCanvasId);
-      //MonsterDebugger.trace(this, "creating newAuxiliaryCanvas "+internalCanvasId);
+      trace(this, "creating newAuxiliaryCanvas "+internalCanvasId);
       return internalCanvasId;
     }
 
 
     public function executeCommand(internalCanvasId:Number, data:String):*
     {
-	  //trace("execute command from flash");
+      trace("execute command from flash "+data);
       if(!internalCanvasId) {internalCanvasId = 0}
       var canvas:Canvas = canvases[internalCanvasId];
 
       if(!canvas) {
         throw new ArgumentError("auxiliary canvas id "+internalCanvasId+" not found");
       }
-
-      //MonsterDebugger.trace(this, "icid");
-      //MonsterDebugger.trace(this, internalCanvasId);
 
       var command:Command = canvas.getCommand(flashCanvasId);
 
@@ -206,10 +192,7 @@ package
         return null;
 
       } catch(e:*) {
-		trace("error executing command "+command.getCurrentCommand());
-        //MonsterDebugger.trace(this, "error executing command "+command.getCurrentCommand());
-        //MonsterDebugger.trace(this, data);
-        //MonsterDebugger.trace(this, e);
+        trace("error executing command "+command.getCurrentCommand());
         throw(e);
         return null;
       }
@@ -218,11 +201,8 @@ package
 
     public function resize(width:int, height:int):void
     {
-		trace("resizing main canvas", width, height);
-        //MonsterDebugger.trace(this, "resizing main canvas")
-        //MonsterDebugger.trace(this, width)
-        //MonsterDebugger.trace(this, height)
-        canvases[0].resize(width, height);
+      trace("resizing main canvas", width, height);
+      canvases[0].resize(width, height);
     }
 
 

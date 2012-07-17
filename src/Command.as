@@ -39,7 +39,6 @@ package
   import com.googlecode.flashcanvas.ImageData;
   import com.googlecode.flashcanvas.Image;
 
-  //import com.demonsters.debugger.MonsterDebugger;
 
   public class Command
   {
@@ -694,7 +693,7 @@ package
       }
       else
       {
-		trace("image has not been cached, LOAD NOW!!");
+        trace("image has not been cached, LOAD NOW!!");
         // Load the image asynchronously
         image = new Image();
         image.addEventListener(ErrorEvent.ERROR, errorHandler);
@@ -717,7 +716,7 @@ package
 
     private function errorHandler(event:ErrorEvent):void
     {
-	  trace("error on image load");
+      trace("error on image load");
       // Remove the image object from the cache.
       var image:Image = event.target as Image;
       images[image.src] = null;
@@ -736,20 +735,19 @@ package
       var url:String = image.src;
       var error:int  = event is ErrorEvent ? 1 : 0;
 
-	  trace("IMAGE HAS LOADED!!");
+      trace("IMAGE HAS LOADED!!");
 
       // Send JavaScript a message that the image has been loaded.
-	  trace("unlock from command as", ctx);
+      trace("unlock from command as", ctx);
       ExternalInterface.call("FlashCanvas.unlock", canvasId, url, error);
-	  // This calls the callback from canvas_rendering.imageLoader()
-	  ExternalInterface.call("FlashCanvas.unlockImage", canvasId, url, error);
+      // This calls the callback from canvas_rendering.imageLoader()
+      ExternalInterface.call("FlashCanvas.unlockImage", canvasId, url, error);
     }
 
     private function mlog(...args:Array):void
     {
       for(var i:uint=0, l:uint=args.length; i<l; i++) {
-		trace('mlog', this, args[i]);
-        //MonsterDebugger.trace(this, args[i]);
+        trace('mlog', this, args[i]);
       }
     }
   }

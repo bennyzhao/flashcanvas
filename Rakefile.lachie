@@ -11,7 +11,7 @@ task :env do
 end
 
 task :build => :env do
-  sh "mxmlc -incremental -compiler.library-path+=MonsterDebugger.swc src/FlashCanvas.as -output bin/flashcanvas.swf"
+  sh "mxmlc -incremental src/FlashCanvas.as -output bin/flashcanvas.swf"
 end
 
 task :copy do
