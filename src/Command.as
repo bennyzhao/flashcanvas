@@ -677,9 +677,11 @@ package
 
     private function resize():void
     {
+      trace("resizing");
       var width:int  = input.readInt();
       var height:int = input.readInt();
       ctx.resize(width, height);
+      return;
     }
 
     private function getImageObject(src:String):Image

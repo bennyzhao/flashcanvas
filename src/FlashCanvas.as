@@ -62,6 +62,8 @@ package
     public function FlashCanvas()
     {
 
+      trace("hello flash");
+
       // stage settings
       stage.scaleMode = StageScaleMode.NO_SCALE;
       stage.align     = StageAlign.TOP_LEFT;
@@ -122,6 +124,9 @@ package
 
         contextMenu.hideBuiltInItems();
         contextMenu.customItems.push(saveItem, aboutItem);
+
+        contextMenu.customItems.push( new ContextMenuItem("FlashCanvas Blake 1.0.0") );
+        
 
         this.contextMenu = contextMenu;
       } catch (e:*) {
