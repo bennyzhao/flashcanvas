@@ -60,12 +60,9 @@ package
     private function trace(...args:Array):void
     {
       for(var i:uint=0, l:uint=args.length; i<l; i++) {
-        trace(args[i]);
-        //MonsterDebugger.trace(this, args[i]);
+        MonsterDebugger.trace(this, args[i]);
       }
     }
-    
-
     
 
     public function Command(ctx:CanvasRenderingContext2D, canvasId:String)
@@ -754,8 +751,8 @@ package
       trace("IMAGE HAS LOADED!!");
 
       // Send JavaScript a message that the image has been loaded.
-      trace("unlock from command as", ctx);
-      ExternalInterface.call("FlashCanvas.unlock", canvasId, url, error);
+      trace("unlockImage from command as", ctx);
+
       // This calls the callback from canvas_rendering.imageLoader()
       ExternalInterface.call("FlashCanvas.unlockImage", canvasId, url, error);
     }
