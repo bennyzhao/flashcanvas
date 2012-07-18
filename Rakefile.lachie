@@ -10,8 +10,12 @@ task :env do
   end
 end
 
+task :clean do
+  rm "bin/flashcanvas.swf*"
+end
+
 task :build => :env do
-  sh "mxmlc -incremental src/FlashCanvas.as -output bin/flashcanvas.swf"
+  sh "mxmlc -omit-trace-statements=false -warnings=true -debug=true -compiler.library-path+=MonsterDebugger.swc -incremental src/FlashCanvas.as -output bin/flashcanvas.swf"
 end
 
 task :copy do
