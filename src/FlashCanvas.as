@@ -50,18 +50,33 @@ package
   import com.googlecode.flashcanvas.Canvas;
   import com.googlecode.flashcanvas.Config;
 
+
+  import com.demonsters.debugger.MonsterDebugger;
+
+
   [SWF(backgroundColor="#FFFFFF")]
   public class FlashCanvas extends Sprite
   {
-
     private var canvases:Array
 
     private var flashCanvasId:String;
     private var timer:Timer;
 
+    private var oldTrace:Function = trace;
+    private function trace(...args:Array):void
+    {
+      for(var i:uint=0, l:uint=args.length; i<l; i++) {
+        Tracer.globalTrace(args[i]);
+        MonsterDebugger.trace(this, args[i]);
+      }
+    }
+
+
+
     public function FlashCanvas()
     {
 
+      MonsterDebugger.initialize(this);
       trace("hello flash");
 
       // stage settings
@@ -149,6 +164,7 @@ package
     }
 
 
+
     private function timerHandler(event:TimerEvent):void
     {
       trace("timer");
@@ -165,19 +181,21 @@ package
     /*
      * JS API
      */
-    public function newAuxiliaryCanvas():Number
+    public function newAuxiliaryCanvas():*
     {
       var internalCanvasId:uint = canvases.length;
       var canvas:Canvas = new Canvas(this, internalCanvasId);
       canvases.push(canvas);
-      trace(this, "creating newAuxiliaryCanvas "+internalCanvasId);
-      return internalCanvasId;
+
+      trace("creating newAuxiliaryCanvas ", internalCanvasId);
+      return internalCanvasId.toString();
     }
 
 
     public function executeCommand(internalCanvasId:Number, data:String):*
     {
-      trace("execute command from flash "+data);
+      trace("execute command from flash ", data);
+
       if(!internalCanvasId) {internalCanvasId = 0}
       var canvas:Canvas = canvases[internalCanvasId];
 
@@ -190,6 +208,7 @@ package
       if(!command) {
         throw new ArgumentError("unable to get command parser for auxiliary canvas id "+internalCanvasId);
       }
+      trace("command", command, data);
 
       try {
         if (data.length > 0)
@@ -207,6 +226,7 @@ package
     public function resize(width:int, height:int):void
     {
       trace("resizing main canvas", width, height);
+
       canvases[0].resize(width, height);
     }
 

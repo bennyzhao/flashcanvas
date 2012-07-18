@@ -39,6 +39,8 @@ package
   import com.googlecode.flashcanvas.ImageData;
   import com.googlecode.flashcanvas.Image;
 
+  import com.demonsters.debugger.MonsterDebugger;
+
 
   public class Command
   {
@@ -53,6 +55,18 @@ package
     private var input:CommandArray;
     private var styles:Array = [];
     private var images:Object = {};
+
+
+    private function trace(...args:Array):void
+    {
+      for(var i:uint=0, l:uint=args.length; i<l; i++) {
+        trace(args[i]);
+        //MonsterDebugger.trace(this, args[i]);
+      }
+    }
+    
+
+    
 
     public function Command(ctx:CanvasRenderingContext2D, canvasId:String)
     {
