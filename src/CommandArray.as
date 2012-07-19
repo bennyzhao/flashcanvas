@@ -36,7 +36,7 @@ package
 
         public function CommandArray(data:String)
         {
-            array    = data.split("XXFCXX");
+            array    = data.split("\u0001");
             length   = array.length;
             position = 0;
         }
