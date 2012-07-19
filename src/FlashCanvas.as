@@ -244,6 +244,19 @@ package
     }
 
 
+    public function preloadImages(images:Array):void {
+      imageCache.addEventListener("preloaded", preloadHandler);
+      imageCache.preloadImages(images);
+    }
+
+    public function preloadHandler(event:Event):void {
+      imageCache.removeEventListener("preloaded", preloadHandler);
+
+      trace("images preloaded");
+      ExternalInterface.call("FlashCanvas.preloadedImages");
+    }
+
+
     /*
      * Aux Canvas
      */
