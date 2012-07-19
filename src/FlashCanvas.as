@@ -49,6 +49,7 @@ package
   import com.adobe.images.PNGEncoder;
   import com.googlecode.flashcanvas.Canvas;
   import com.googlecode.flashcanvas.Config;
+  import com.googlecode.flashcanvas.ImageCache;
 
 
   import com.demonsters.debugger.MonsterDebugger;
@@ -62,22 +63,22 @@ package
     private var flashCanvasId:String;
     private var timer:Timer;
 
-    private var oldTrace:Function = trace;
+    private var imageCache:ImageCache;
+
     private function trace(...args:Array):void
     {
       for(var i:uint=0, l:uint=args.length; i<l; i++) {
-        Tracer.globalTrace(args[i]);
         MonsterDebugger.trace(this, args[i]);
       }
     }
-
-
 
     public function FlashCanvas()
     {
 
       MonsterDebugger.initialize(this);
       trace("hello flash");
+
+      imageCache = new ImageCache();
 
       // stage settings
       stage.scaleMode = StageScaleMode.NO_SCALE;
@@ -203,12 +204,11 @@ package
         throw new ArgumentError("auxiliary canvas id "+internalCanvasId+" not found");
       }
 
-      var command:Command = canvas.getCommand(flashCanvasId);
+      var command:Command = canvas.getCommand(flashCanvasId, imageCache);
 
       if(!command) {
         throw new ArgumentError("unable to get command parser for auxiliary canvas id "+internalCanvasId);
       }
-      trace("command", command, data);
 
       try {
         if (data.length > 0)

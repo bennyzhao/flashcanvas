@@ -39,6 +39,7 @@ package com.googlecode.flashcanvas
   import com.adobe.images.PNGEncoder;
 
   import com.googlecode.flashcanvas.CanvasRenderingContext2D;
+  import com.googlecode.flashcanvas.ImageCache;
   //import com.demonsters.debugger.MonsterDebugger;
 
 
@@ -113,11 +114,11 @@ package com.googlecode.flashcanvas
     }
 
 
-    public function getCommand(canvasId:String):Command
+    public function getCommand(canvasId:String, imageCache:ImageCache):Command
     {
       if(!_command) {
         var ctx:* = this.getContext('2d')
-          _command = new Command(ctx, canvasId);
+          _command = new Command(ctx, canvasId, imageCache);
       }
       return _command;
     }

@@ -38,6 +38,7 @@ package
   import com.googlecode.flashcanvas.CSSColor;
   import com.googlecode.flashcanvas.ImageData;
   import com.googlecode.flashcanvas.Image;
+  import com.googlecode.flashcanvas.ImageCache;
 
   import com.demonsters.debugger.MonsterDebugger;
 
@@ -54,7 +55,8 @@ package
 
     private var input:CommandArray;
     private var styles:Array = [];
-    private var images:Object = {};
+
+    private var imageCache:ImageCache;
 
 
     private function trace(...args:Array):void
@@ -65,11 +67,12 @@ package
     }
     
 
-    public function Command(ctx:CanvasRenderingContext2D, canvasId:String)
+    public function Command(ctx:CanvasRenderingContext2D, canvasId:String, imageCache:ImageCache)
     {
       this.ctx      = ctx;
       this.canvas   = ctx.canvas;
       this.canvasId = canvasId;
+      this.imageCache = imageCache;
       initializeDispatchTable();
     }
 
@@ -699,10 +702,10 @@ package
     {
       var image:Image;
 
-      if (src in images)
+      if (imageCache.hasImage(src))
       {
         // Return a cached Image object
-        image = images[src];
+        image = imageCache.getImage(src);
       }
       else
       {
@@ -714,7 +717,7 @@ package
         image.src = src;
 
         // Cache the Image object
-        images[src] = image;
+        imageCache.addImage(src, image);
       }
 
       return image;
@@ -732,7 +735,7 @@ package
       trace("error on image load");
       // Remove the image object from the cache.
       var image:Image = event.target as Image;
-      images[image.src] = null;
+      imageCache.removeImage(image.src);
 
       // Cleanup.
       loadHandler(event);
