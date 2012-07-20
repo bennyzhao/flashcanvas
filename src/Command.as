@@ -719,6 +719,7 @@ package
         // Cache the Image object
         imageCache.addImage(src, image);
       }
+      trace("getImageObject", src, image);
 
       return image;
     }

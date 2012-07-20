@@ -92,6 +92,7 @@ package
       ExternalInterface.addCallback("newAuxiliaryCanvas", newAuxiliaryCanvas);
       ExternalInterface.addCallback("resize", resize);
       ExternalInterface.addCallback("saveImage", saveImage);
+      ExternalInterface.addCallback("preloadImages", preloadImages);
 
       // Flash Player earlier than version 10.1 has a bug that
       // ExternalInterface.objectID returns null under some conditions.
@@ -156,12 +157,13 @@ package
       }
       catch (error:Error)
       {
-        trace("unlocking error");
+        trace("unlocking error", error);
         timer = new Timer(0, 1);
         timer.addEventListener(TimerEvent.TIMER, timerHandler);
         timer.start();
       }
-      trace("yay2");
+
+      trace("completed setup");
     }
 
 
@@ -195,7 +197,7 @@ package
 
     public function executeCommand(internalCanvasId:Number, data:String):*
     {
-      trace("execute command from flash ", data);
+      //trace("execute command from flash ", internalCanvasId, data);
 
       if(!internalCanvasId) {internalCanvasId = 0}
       var canvas:Canvas = canvases[internalCanvasId];
@@ -216,7 +218,7 @@ package
         return null;
 
       } catch(e:*) {
-        trace("error executing command "+command.getCurrentCommand());
+        trace("error executing command ", command.getCurrentCommand(), e);
         throw(e);
         return null;
       }
